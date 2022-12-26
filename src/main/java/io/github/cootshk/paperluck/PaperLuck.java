@@ -35,7 +35,7 @@ public final class PaperLuck extends JavaPlugin implements Listener{
 
 
     //Loot table
-    private final Plugin plugin = PaperLuck.getPlugin(PaperLuck.class);
+    private final Plugin plugin = getPlugin(PaperLuck.class);
     private final NamespacedKey key = new NamespacedKey(plugin, "PaperLuck");
     private final Collection<ItemStack> items = new ArrayList<>();
 
