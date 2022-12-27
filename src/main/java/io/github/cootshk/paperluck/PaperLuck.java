@@ -13,31 +13,32 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.loot.LootContext;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.plugin.Plugin;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Objects;
 import java.util.Random;
 
 import java.lang.Math;
 
 public final class PaperLuck extends JavaPlugin implements Listener{
+
+
+    private NamespacedKey key;
+    private final Collection<ItemStack> items = new ArrayList<>();
+
     @Override
     public void onEnable() {
         // Plugin startup logic
         System.out.println("Plugin Started!"); // Startup
+        key = new NamespacedKey(this, "PaperLuck");
         getServer().getPluginManager().registerEvents(this, this); // Run the plugin
-        Objects.requireNonNull(this.getCommand("kit")).setExecutor(new PaperLuck()); // Setup command
     }
 
 
     //Loot table
-    private final Plugin plugin = getPlugin(PaperLuck.class);
-    private final NamespacedKey key = new NamespacedKey(plugin, "PaperLuck");
-    private final Collection<ItemStack> items = new ArrayList<>();
 
     public Collection<ItemStack> populateLoot(Random random, LootContext context) {
         double luck_modifier;
@@ -92,7 +93,7 @@ public final class PaperLuck extends JavaPlugin implements Listener{
 
     //Item interaction handler
     @EventHandler
-    public void PaperInteracted(PlayerInteractEvent event){
+    public void PaperInteracted(@NotNull PlayerInteractEvent event){
         @Nullable ItemStack item = event.getItem();
         if (item == null){
             return;
